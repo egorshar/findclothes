@@ -20,6 +20,7 @@ require.config({
   paths: {
     jquery: 'vendor/jquery/dist/jquery',
     underscore: 'vendor/underscore/underscore',
-    backbone: 'vendor/backbone/backbone'
+    backbone: 'vendor/backbone/backbone',
+    jade: 'vendor/jade/runtime'
   }
 });

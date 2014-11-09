@@ -27,6 +27,3 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
-
-# bower components
-public/javascripts/vendor
