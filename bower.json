@@ -1,0 +1,23 @@
+{
+  "name": "findclothes",
+  "version": "0.0.0",
+  "homepage": "https://github.com/egych/findclothes",
+  "authors": [
+    "egych <egor.sharapov@gmail.com>"
+  ],
+  "main": "public/stylesheets/app.css",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/javascripts/",
+    "test",
+    "tests"
+  ]
+}
