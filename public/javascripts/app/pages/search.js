@@ -5,8 +5,8 @@ define('app/pages/search', function (require) {
       SearchPage;
 
   SearchPage = Page.extend({
-    initialize: function () {
-      console.log('search page inited');
+    initialize: function (query) {
+      console.log('search: ' + query);
     }
   });
 

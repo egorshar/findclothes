@@ -8,8 +8,22 @@ define('app/pages/index', function (require) {
   IndexPage = Page.extend({
     template: Template,
 
+    events: {
+      'click #search_btn': 'searchSubmit'
+    },
+
     initialize: function () {
-      console.log(Template);
+      Page.prototype.initialize.call(this);
+    },
+
+    searchSubmit: function () {
+      var val = this.$('#search').val();
+
+      if (val) {
+        FC.router.navigate('/search/' + encodeURIComponent(val), {
+          trigger: true
+        });
+      }
     }
   });
 

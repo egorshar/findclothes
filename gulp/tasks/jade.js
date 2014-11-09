@@ -6,7 +6,6 @@ var wrap = require('gulp-wrap-amd');
 var config = require('../config').jade;
 
 gulp.task('jade', function() {
-  console.log(config.src);
   return gulp.src(config.src)
     .pipe(changed(config.dest)) // Ignore unchanged files
     .pipe(jade({
