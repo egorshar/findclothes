@@ -1,0 +1,51 @@
+.mini-browser {
+  position: absolute;
+  width: 400px;
+  height: 300px;
+  border: 1px solid #D3D3D3;
+  border-radius: 5px;
+
+  &__head {
+    width: 100%;
+    height: 38px;
+    background-color: #D3D3D3;
+
+    &__buttons {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      line-height: 100%;
+
+      &__button {
+        display: inline-block;
+        width: 11px;
+        height: 11px;
+        border-radius: 20px;
+        margin-left: 5px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &-close {
+          background-color: #EE6A32;
+        }
+        &-minimize {
+          background-color: #E7AD00;
+        }
+        &-maximize {
+          background-color: #79CB1E;
+        }
+      }
+    }
+
+    &__address {
+      left: 67px;
+      right: 8px;
+      height: 21px;
+      background-color: #F8F8F8;
+      position: absolute;
+      top: 8px;
+    }
+  }
+}
