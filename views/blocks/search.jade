@@ -1,5 +1,11 @@
 div.search-block
-  div.search-block__right
-    input(type='button', class='btn btn-default search-block__right__btn', id='search_btn', value='Найти')
-  div.search-block__left
-    input(type='text', class='form-control search-block__left__input', id='search', placeholder='Название вещи')
+  div.container
+    div.search-block__title
+      h1.search-block__title__caption= "Любая вещь — найдется"
+    div.search-block__input-wrapper
+      div.container
+        div.row
+          div.col-md-2
+          div.col-md-8
+            input(type='text', class='form-control input-lg search-block__input-wrapper__input', id='search', placeholder='Adidas x Barbour GSGNein Jacket')
+          div.col-md-2
