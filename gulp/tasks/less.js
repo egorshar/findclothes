@@ -8,7 +8,6 @@ var path = require('path');
 var config = require('../config').less;
 
 gulp.task('less', function() {
-  console.log(path.join(__dirname, 'less', 'includes'));
   return gulp.src(config.src)
     .pipe(changed(config.dest))
     .pipe(less({
