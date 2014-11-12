@@ -1,5 +1,8 @@
 {
   "directory": "public/javascripts/vendor/",
-  "analytics": false
+  "analytics": false,
+  "scripts": {
+    "preinstall": "bower install"
+  }
 }
 
