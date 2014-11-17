@@ -3,35 +3,53 @@
 .search-block {
   position: relative;
 
-  background-image: url(/images/landing.jpg);
-  background-position: center center;
-  background-size: cover;
+  // background-image: url(/images/landing.jpg);
+  // background-position: center center;
+  // background-size: cover;
   width: 100%;
-  height: 370px;
-  border-bottom: 1px solid @gray-light;
+  background: #80768E;
+  // height: 370px;
+  border-bottom: 1px solid @std-violet;
 
-  &__title {
-    text-align: center;
-    padding-top: 50px;
+  // &__title {
+  //   text-align: center;
+  //   padding-top: 10px;
 
-    &__caption {
-      margin: 0;
-      font-size: 50px;
-      font-weight: 300;
-      color: #fff;
-      text-shadow: 1px 1px 2px @input-border-focus;
-    }
-  }
+  //   &__caption {
+  //     margin: 0;
+  //     font-size: 50px;
+  //     font-weight: 300;
+  //     color: #fff;
+  //     text-shadow: 1px 1px 2px @input-border-focus;
+  //   }
+  // }
 
   &__input-wrapper {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 65px;
+    // position: absolute;
+    // left: 0;
+    // right: 0;
+    // bottom: 65px;
 
     &__input {
-      border-radius: 40px;
-      border: 2px solid @input-border-focus;
+      margin: 30px 0;
+
+      // border-radius: 40px;
+      .form-control,
+      .btn {
+        border-color: @input-border-focus;
+      }
+
+      .btn {
+        color: @std-violet;
+        background: #fff;
+      }
+      // margin: 30px 100px 30px 0;
+      // display: inline-block;
+    }
+
+    &__submit {
+      display: inline-block;
+      width: 90px;
     }
   }
 }

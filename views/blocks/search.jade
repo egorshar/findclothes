@@ -1,11 +1,15 @@
 div.search-block
-  div.container
-    div.search-block__title
-      h1.search-block__title__caption= "Любая вещь — найдется"
-    div.search-block__input-wrapper
-      div.container
-        div.row
-          div.col-md-2
-          div.col-md-8
-            input(type='text', class='form-control input-lg search-block__input-wrapper__input', id='search', placeholder='Adidas x Barbour GSGNein Jacket')
-          div.col-md-2
+  //- div.container
+    //- div.search-block__title
+    //-   h1.search-block__title__caption= "Любая вещь — найдется"
+  div.search-block__input-wrapper
+    div.container
+      div.row
+        div.col-md-2
+        div.col-md-8
+          form
+            div.input-group.input-group-lg.search-block__input-wrapper__input
+              input(type='text', class='form-control', id='search', placeholder='Adidas x Barbour GSGNein Jacket')
+              div.input-group-btn
+                input(type='submit', class='btn', value='Найти')
+        div.col-md-2
