@@ -7,12 +7,17 @@ define('app/pages/page', function (require) {
   Page = Backbone.View.extend({
     first_load: false,
 
+    events: {
+      'click a': 'linkTo'
+    },
+
     initialize: function () {
       this.setElement($('#page'));
       this.firstLoad();
     },
 
     destroy: function () {
+      this.undelegateEvents();
       this.$el.off();
     },
 
@@ -25,6 +30,17 @@ define('app/pages/page', function (require) {
       }
 
       return this.first_load;
+    },
+
+    linkTo: function (e) {
+      var $this = $(e.currentTarget);
+
+      FC.router.navigate($this.attr('href'), {
+        trigger: true
+      });
+
+      e.preventDefault();
+      e.stopPropagation();
     }
   });
 

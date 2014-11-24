@@ -1,4 +1,4 @@
-div.search-block
+div.search-block(id="search_block")
   //- div.container
     //- div.search-block__title
     //-   h1.search-block__title__caption= "Любая вещь — найдется"
@@ -7,9 +7,10 @@ div.search-block
       div.row
         div.col-md-2
         div.col-md-8
-          form
+          form(action="/search/")
             div.input-group.input-group-lg.search-block__input-wrapper__input
-              input(type='text', class='form-control', id='search', placeholder='Adidas x Barbour GSGNein Jacket')
+              input(type='text', class='form-control', id='search', name="query" placeholder='Adidas x Barbour GSGNein Jacket')
               div.input-group-btn
-                input(type='submit', class='btn', value='Найти')
+                button(type='submit', class='btn', id="search_btn")
+                  span.glyphicon.glyphicon-search
         div.col-md-2

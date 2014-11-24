@@ -7,7 +7,7 @@ module.exports = {
     dest: base_dir + 'public/stylesheets/'
   },
   jade: {
-    src: base_dir + 'views/**.jade',
+    src: base_dir + 'views/**/*.jade',
     dest: base_dir + 'public/javascripts/views/'
   }
 };
