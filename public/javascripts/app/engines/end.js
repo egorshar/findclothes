@@ -8,10 +8,6 @@ define('app/engines/end', function (require) {
     url: 'http://www.endclothing.co.uk/catalogsearch/result/?q=#QUERY#&x=0&y=0',
     name: 'Endclothing',
 
-    initialize: function (params) {
-      Engine.prototype.initialize.call(this, params);
-    },
-
     parse: function ($body) {
       var items = $body.find('.category-products.catalog-listing .thumbnail.item').each(_.bind(function (key, item) {
         var $item = $(item),
@@ -20,7 +16,7 @@ define('app/engines/end', function (require) {
         this.results.push({
           detail_page: $item.find('.product-image').attr('href'),
           photo: $item.find('.product-image img').attr('src'),
-          name: $item.find('h3 a').text() + '(' +$item.find('h4') + ')',
+          name: $item.find('h3 a').text() + ' (' +$item.find('h4').text() + ')',
           price: price.replace(/[^\d\.]/gi, ''),
           currency: this.parseCurrency(price.replace(/[\d\.]/gi, ''))
         });

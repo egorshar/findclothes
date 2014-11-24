@@ -3,7 +3,7 @@ define('app/pages/index', function (require) {
 
   var Page = require('app/pages/page'),
       template = require('views/partials/index'),
-      Spinner = require('spinjs'),
+      Ladda = require('ladda'),
       IndexPage;
 
   IndexPage = Page.extend({
@@ -38,7 +38,7 @@ define('app/pages/index', function (require) {
       var val = this.$('#search').val();
 
       if (val) {
-        this.showSpinner();
+        this.showBtnLoader();
 
         FC.router.navigate('/search/' + encodeURIComponent(val), {
           trigger: FC.router.current().indexOf('search') !== 0 ? true : false
@@ -53,25 +53,31 @@ define('app/pages/index', function (require) {
     },
     /* end of DOM-events */
 
-    showSpinner: function () {
-      var spinner = new Spinner({
-        lines: 7, // The number of lines to draw
-        length: 0, // The length of each line
-        width: 7, // The line thickness
-        radius: 8, // The radius of the inner circle
-        corners: 1, // Corner roundness (0..1)
-        rotate: 0, // The rotation offset
-        direction: 1, // 1: clockwise, -1: counterclockwise
-        color: '#000', // #rgb or #rrggbb or array of colors
-        speed: 1, // Rounds per second
-        trail: 60, // Afterglow percentage
-        shadow: false, // Whether to render a shadow
-        hwaccel: false, // Whether to use hardware acceleration
-        className: 'spinner', // The CSS class to assign to the spinner
-        zIndex: 2e9, // The z-index (defaults to 2000000000)
-        top: '50%', // Top position relative to parent
-        left: '50%' // Left position relative to parent
-      }).spin(this.$('#search_btn')[0]);
+    showBtnLoader: function () {
+      this.btn_loader = Ladda.create(this.$('#search_btn')[0]);
+      this.btn_loader.start();
+// // Start loading
+// l.start();
+
+// // Will display a progress bar for 50% of the button width
+// l.setProgress( 0.5 );
+
+// // Stop loading
+// l.stop();
+
+// // Toggle between loading/not loading states
+// l.toggle();
+
+// // Check the current state
+// l.isLoading();
+
+// // Delete the button's ladda instance
+// l.remove();
+//       Ladda.bind('#search_btn', {
+//         callback: function (instance) {
+//           console.log(instance);
+//         }
+//       });
     }
   });
 

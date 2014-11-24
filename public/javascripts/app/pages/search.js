@@ -15,6 +15,7 @@ define('app/pages/search', function (require) {
       EnginesCollection;
 
   engines.End = require('app/engines/end');
+  engines.Oipolloi = require('app/engines/oipolloi');
 
   SearchCollection = Backbone.Collection.extend({
     destroy: function () {
@@ -68,7 +69,7 @@ define('app/pages/search', function (require) {
       this.$search_results = $page.find('#search_results');
 
       if ($search_block.length) {
-        $search_block.append($page.find('#search_results'))
+        $search_block.append($page.find('#search_results_wrapper'))
           .prepareTransition()
           .addClass('search-block-active');
       } else {
@@ -91,7 +92,7 @@ define('app/pages/search', function (require) {
       var view = new SearchResultsItem({
         model: model
       });
-console.log(this.$search_results, view);
+
       this.$search_results.append(view.el);
     }
   });

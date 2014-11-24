@@ -35,12 +35,14 @@ define('app/pages/page', function (require) {
     linkTo: function (e) {
       var $this = $(e.currentTarget);
 
-      FC.router.navigate($this.attr('href'), {
-        trigger: true
-      });
+      if ($this.attr('target') != '_blank') {
+        FC.router.navigate($this.attr('href'), {
+          trigger: true
+        });
 
-      e.preventDefault();
-      e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
+      }
     }
   });
 

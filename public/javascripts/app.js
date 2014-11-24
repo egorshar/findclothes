@@ -25,7 +25,8 @@
       underscore: 'vendor/underscore/underscore',
       backbone: 'vendor/backbone/backbone',
       jade: 'vendor/jade/runtime',
-      spinjs: 'vendor/spinjs/spin'
+      spin: 'vendor/spinjs/spin',
+      ladda: 'vendor/ladda/dist/ladda.min'
     }
   });
 }(this, document));
