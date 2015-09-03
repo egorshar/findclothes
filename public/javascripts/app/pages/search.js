@@ -1,4 +1,4 @@
-define('app/pages/search', function (require) {
+define(function (require) {
   'use strict';
 
 	var Page = require('app/pages/page'),

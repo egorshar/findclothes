@@ -2,7 +2,13 @@ var _ = require('underscore'),
     requireDir = require('require-dir'),
 
     config = require('./config'),
-    stores = requireDir('./stores'),
+    // stores = requireDir('./stores'),
+    stores = [
+      require('./stores/endclothing'),
+      require('./stores/oipolloi'),
+      require('./stores/thehipstore'),
+    ],
+    // stores = [require('./stores/cultizm')],
 
     initStoreCrawler;
 

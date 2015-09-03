@@ -1,4 +1,4 @@
-define('app/router', function (require) {
+define(function (require) {
   'use strict';
 
   var AppRouter,

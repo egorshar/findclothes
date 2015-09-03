@@ -2,8 +2,13 @@ doctype html
 html
   head
     title= title
-    script(src='/javascripts/vendor/requirejs/require.js')
-    script(src='/javascripts/app.js')
+    script(data-main="/javascripts/config.js" src='/javascripts/vendor/requirejs/require.js')
+    script(type="text/javascript").
+      window.FC = window.FC || {};
+      require(['app/router'], function (AppRouter) {
+        FC.router = new AppRouter();
+        Backbone.history.start({pushState: true});
+      });
 
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='//fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=latin,cyrillic-ext')

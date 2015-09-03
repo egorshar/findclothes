@@ -1,4 +1,4 @@
-define('app/pages/page', function (require) {
+define(function (require) {
   'use strict';
 
   var Backbone = require('backbone'),
