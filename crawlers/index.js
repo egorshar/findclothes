@@ -9,8 +9,9 @@ var _ = require('underscore'),
     //   require('./stores/thehipstore'),
     //   require('./stores/tres-bien'),
     //   require('./stores/triads'),
+    //   require('./stores/cultizm'),
     // ],
-    stores = [require('./stores/cultizm')],
+    stores = [require('./stores/thehipstore')],
 
     initStoreCrawler;
 

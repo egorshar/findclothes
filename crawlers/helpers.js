@@ -22,8 +22,11 @@ module.exports = {
     return (price || '').toString().replace(/\,/gi, '.').replace(/[^\d\.]/gi, '');
   },
 
-  initCrawler: function (url) {
-    var crawler = Crawler.crawl(url);
+  initCrawler: function (url, options) {
+    var crawler = Crawler.crawl(url),
+        helpers = this;
+
+    options = options || {};
 
     // настраиваем паука
     crawler.interval = 100;
@@ -31,6 +34,18 @@ module.exports = {
     crawler.timeout = 5000;
 
     crawler.addFetchCondition(this.excludeCondition);
+
+    crawler
+      .on("fetchcomplete", function (queueItem, fetchPage, response) {
+        if (queueItem.url.match(options.itemMatch)) {
+          helpers.fetchPage(fetchPage, function (errors, window) {
+            if (_.isFunction(options.onFetch)) {
+              options.onFetch.apply(this, [queueItem.url, window]);
+            }
+          }, this);
+        }
+      })
+      .discoverRegex = options.discoverRegex;
 
     return crawler;
   },
