@@ -1,6 +1,9 @@
 var _ = require('underscore'),
     Crawler = require("simplecrawler"),
-    jsdom = require("jsdom");
+    jsdom = require("jsdom"),
+
+    // регулярка поиска размеров внутри json-объекта
+    re = /\d\",\"label\"\:\"([^\"]+)\"/gi;
 
 module.exports = {
   fetchPage: function (buffer, callback, context) {
@@ -16,7 +19,7 @@ module.exports = {
   },
 
   parsePrice: function (price) {
-    return (price || '').toString().replace(/[^\d\.]/gi, '');
+    return (price || '').toString().replace(/\,/gi, '.').replace(/[^\d\.]/gi, '');
   },
 
   initCrawler: function (url) {
@@ -31,4 +34,22 @@ module.exports = {
 
     return crawler;
   },
+
+  getSPConfigSizes: function (html_with_script) {
+    var sizes = [], m;
+
+    // заполним массив доступных размеров
+    // из json-объекта регуляркой
+    while ((m = re.exec(html_with_script)) !== null) {
+      if (m.index === re.lastIndex) {
+        re.lastIndex++;
+      }
+
+      sizes.push(m[1].split(' ')[0]);
+    }
+
+    return _.reject(sizes, function (size) {
+      return !size;
+    });
+  }
 };

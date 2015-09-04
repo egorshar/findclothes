@@ -3,12 +3,14 @@ var _ = require('underscore'),
 
     config = require('./config'),
     // stores = requireDir('./stores'),
-    stores = [
-      require('./stores/endclothing'),
-      require('./stores/oipolloi'),
-      require('./stores/thehipstore'),
-    ],
-    // stores = [require('./stores/cultizm')],
+    // stores = [
+    //   require('./stores/endclothing'),
+    //   require('./stores/oipolloi'),
+    //   require('./stores/thehipstore'),
+    //   require('./stores/tres-bien'),
+    //   require('./stores/triads'),
+    // ],
+    stores = [require('./stores/cultizm')],
 
     initStoreCrawler;
 
@@ -22,7 +24,7 @@ initStoreCrawler = function () {
 
     crawler
       .on('complete', function () {
-        console.log('Completed: "' + this.store_name + '"');
+        console.log('Completed: "' + stores_names[0] + '"');
         // закончили с магазином,
         // запускаем поиск еще в одном
         initStoreCrawler();

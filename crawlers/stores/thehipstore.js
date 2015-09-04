@@ -1,5 +1,4 @@
-var _ = require('underscore'),
-    helpers = require('../helpers');
+var helpers = require('../helpers');
 
 module.exports = function () {
   var crawler = helpers.initCrawler("http://thehipstore.co.uk/collections/all/");
@@ -28,7 +27,9 @@ module.exports = function () {
         }, this);
       }
     })
-    .discoverRegex = [new RegExp('(\\shref\\s?=\\s?)[\"](.+(products\/)[^\"]+)', 'ig')];;
+    .discoverRegex = [
+      /(\shref\s?=\s?)[\"](.+(products\/)[^\"]+)/gi
+    ];
 
   return crawler;
 };

@@ -1,5 +1,4 @@
-var _ = require('underscore'),
-    helpers = require('../helpers');
+var helpers = require('../helpers');
 
 module.exports = function () {
   var crawler = helpers.initCrawler("http://www.oipolloi.com/collections/in-stock/");
@@ -30,7 +29,9 @@ module.exports = function () {
         }, this);
       }
     })
-    .discoverRegex = [new RegExp('(\\shref\\s?=\\s?)[\"](.+(collections\/in-stock\/)[^\"]+)', 'ig')];;
+    .discoverRegex = [
+      /(\shref\s?=\s?)[\"](.+(collections\/in-stock\/)[^\"]+)/gi
+    ];
 
   return crawler;
 };
