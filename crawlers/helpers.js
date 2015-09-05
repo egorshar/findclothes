@@ -54,7 +54,7 @@ module.exports = {
             helpers.fetchPage(fetchPage, function (errors, window) {
               // console.log(window.$('body').html());
               if (_.isFunction(options.onFetch)) {
-                options.onFetch.apply(this, [queueItem.url, window]);
+                options.onFetch.apply(this, [queueItem.url, window.$]);
               }
             }, this);
           }

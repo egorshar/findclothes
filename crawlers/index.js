@@ -1,9 +1,8 @@
 var _ = require('underscore'),
     requireDir = require('require-dir'),
 
-    config = require('./config'),
     // stores = requireDir('./stores'),
-    
+
     // stores = [
     //   require('./stores/endclothing'),
     //   require('./stores/oipolloi'),
@@ -13,7 +12,7 @@ var _ = require('underscore'),
     //   require('./stores/cultizm'),
     //   require('./stores/peggsandson'),
     // ],
-    stores = [require('./stores/themenswear')],
+    stores = [require('./stores/peggsandson')],
 
     initStoreCrawler;
 

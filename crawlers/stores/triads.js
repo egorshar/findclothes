@@ -7,17 +7,17 @@ module.exports = function () {
       /href=\"(\/triads\-mens\-c1\/[\w\d\-]+\/[\w\d\-]+\/[\w\d\-]+)\"/gi,
       /href=\".+\/triads-mens-c1\?page\=\d{1,}\"/gi
     ],
-    onFetch: function (url, window) {
-      var name_mod = window.$.trim(window.$('#product_title').text()).split(' - ');
+    onFetch: function (url, $) {
+      var name_mod = $.trim($('#product_title').text()).split(' - ');
 
       this.emit('good_fetched', {
         url: url,
-        brand: window.$.trim(window.$('#breadcrumb_container span:last').text()),
+        brand: $.trim($('#breadcrumb_container span:last').text()),
         name: name_mod[0],
         mod: name_mod[1],
-        img: window.$("#product_medium_image").attr('src'),
-        price: helpers.parsePrice(window.$('#product_price_sale .inc .GBP').text()),
-        price_no_vat: helpers.parsePrice(window.$('#product_price_sale .ex .GBP').text()),
+        img: $("#product_medium_image").attr('src'),
+        price: helpers.parsePrice($('#product_price_sale .inc .GBP').text()),
+        price_no_vat: helpers.parsePrice($('#product_price_sale .ex .GBP').text()),
         currency: 'GBP',
         sizes: [], // нет возможности спарсить размеры :(
       });

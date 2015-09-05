@@ -37,22 +37,22 @@ module.exports = function () {
           }, []);
     },
     // debug: true,
-    onFetch: function (url, window) {
-      var $name = window.$('.product-shop .product-name h1'),
+    onFetch: function (url, $) {
+      var $name = $('.product-shop .product-name h1'),
           name_mod;
 
       name_mod = $name.text().split(' - ');
-      window.$('.product-name span').remove();
+      $('.product-name span').remove();
 
       this.emit('good_fetched', {
         url: url,
-        brand: window.$('.header-detail.manufacture h2 a').text(),
-        name: window.$.trim(name_mod[0]),
+        brand: $('.header-detail.manufacture h2 a').text(),
+        name: $.trim(name_mod[0]),
         mod: name_mod[1],
-        img: window.$(".product-img-container img").attr('src'),
-        price: helpers.parsePrice(window.$('.product-shop .price-box .regular-price:first').text()),
+        img: $(".product-img-container img").attr('src'),
+        price: helpers.parsePrice($('.product-shop .price-box .regular-price:first').text()),
         currency: 'GBP',
-        sizes: helpers.getSPConfigSizes(window.$('#product-options-wrapper').html()),
+        sizes: helpers.getSPConfigSizes($('#product-options-wrapper').html()),
       });
     }
   });

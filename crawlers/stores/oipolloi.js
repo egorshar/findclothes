@@ -6,23 +6,23 @@ module.exports = function () {
     discoverRegex: [
       /(\shref\s?=\s?)[\"](.+(collections\/in-stock\/)[^\"]+)/gi
     ],
-    onFetch: function (url, window) {
-      var mod = window.$('.product-name span').text();
+    onFetch: function (url, $) {
+      var mod = $('.product-name span').text();
 
-      window.$('.product-name span').remove();
+      $('.product-name span').remove();
 
       this.emit('good_fetched', {
         url: url,
-        brand: window.$('.product-title .product-brand a').text(),
-        name: window.$.trim(window.$('.product-name').text()),
+        brand: $('.product-title .product-brand a').text(),
+        name: $.trim($('.product-name').text()),
         mod: mod,
-        img: window.$(".product-photo-container img").attr('src'),
-        price: helpers.parsePrice(window.$('.price.price-full.price-inc-vat .money').text()),
-        price_no_vat: helpers.parsePrice(window.$('.price.price-fullprice-no-vat .money').text()),
-        currency: window.$('.price.price-fullprice-no-vat .money').attr('data-currency'),
-        sizes: window.$.makeArray(
-          window.$('.size-row .btn:not(.disabled)').map(function () {
-            return window.$(this).text();
+        img: $(".product-photo-container img").attr('src'),
+        price: helpers.parsePrice($('.price.price-full.price-inc-vat .money').text()),
+        price_no_vat: helpers.parsePrice($('.price.price-fullprice-no-vat .money').text()),
+        currency: $('.price.price-fullprice-no-vat .money').attr('data-currency'),
+        sizes: $.makeArray(
+          $('.size-row .btn:not(.disabled)').map(function () {
+            return $(this).text();
           })
         ),
       });
