@@ -1,7 +1,7 @@
-var helpers = require('../helpers');
-
 module.exports = function () {
-  return helpers.initCrawler("http://tres-bien.com/categories/", {
+  var _this = this;
+
+  return this.crawl("http://tres-bien.com/categories/", {
     itemMatch: /tres\-bien\.com\/[\w\d\-]+\/[\w\d\-]+/i,
     discoverRegex: [
       /href=\"(\/[\w\d\-]+\/[\w\d\-]+)\"/gi,
@@ -14,9 +14,9 @@ module.exports = function () {
         name: $.trim($('.product-info-container h1').text()),
         mod: $.trim($('.product-info-container .product-short-desc li:first span').text()),
         img: $(".product-image img[rel=\"productPhoto\"]:first").attr('src'),
-        price: helpers.parsePrice($('.product-info-container .regular-price').text()),
+        price: _this.parsePrice($('.product-info-container .regular-price').text()),
         currency: 'EUR',
-        sizes: helpers.getSPConfigSizes($('.product-info-container').html()),
+        sizes: _this.getSPConfigSizes($('.product-info-container').html()),
       });
     }
   });

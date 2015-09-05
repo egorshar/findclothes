@@ -22,7 +22,7 @@ module.exports = {
     return (price || '').toString().replace(/\,/gi, '.').replace(/[^\d\.]/gi, '');
   },
 
-  initCrawler: function (url, options) {
+  crawl: function (url, options) {
     var crawler = Crawler.crawl(url),
         helpers = this;
 
@@ -45,14 +45,12 @@ module.exports = {
       .on("fetchcomplete", function (queueItem, fetchPage, response) {
         if (options.debug) {
           console.log('page fetched: ', queueItem.url);
-          // console.log(response);
         }
         if (queueItem.url.match(options.itemMatch)) {
           if (options.debug) {
             console.log('item matched: ', queueItem.url);
           } else {
             helpers.fetchPage(fetchPage, function (errors, window) {
-              // console.log(window.$('body').html());
               if (_.isFunction(options.onFetch)) {
                 options.onFetch.apply(this, [queueItem.url, window.$]);
               }

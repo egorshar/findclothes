@@ -29,3 +29,4 @@ node_modules
 .lock-wscript
 
 public/stylesheets/less.css
+.env

@@ -1,7 +1,7 @@
-var helpers = require('../helpers');
-
 module.exports = function () {
-  return helpers.initCrawler("http://thehipstore.co.uk/collections/all/", {
+  var _this = this;
+
+  return this.crawl("http://thehipstore.co.uk/collections/all/", {
     itemMatch: /products\//i,
     discoverRegex: [
       /(\shref\s?=\s?)[\"](.+(products\/)[^\"]+)/gi
@@ -16,7 +16,7 @@ module.exports = function () {
         name: $.trim($('h1.half-bottom').text()),
         mod: mod_price[0],
         img: $(".product--image-pop img").attr('src'),
-        price: helpers.parsePrice(mod_price[1]),
+        price: _this.parsePrice(mod_price[1]),
         currency: $('#currency-select option[selected]').val(),
         sizes: $.makeArray(
           $('#product-select option').map(function () {

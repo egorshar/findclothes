@@ -1,7 +1,7 @@
-var helpers = require('../helpers');
-
 module.exports = function () {
-  return helpers.initCrawler("http://www.cultizm.com/", {
+  var _this = this;
+
+  return this.crawl("http://www.cultizm.com/", {
     itemMatch: /cultizm\.com\/product_info\.php\?info\=/i,
     discoverRegex: [
       /href\=\"(http\:\/\/www\.cultizm\.com\/index\.php\?type\=\d+)\"/gi,
@@ -16,7 +16,7 @@ module.exports = function () {
         name: $.trim($('#products_information h1').text()),
         mod: !mod[0] ? mod[1] : '',
         img: 'http://www.cultizm.com/' + $("#products_image_selection .MagicZoomPlus img").attr('src'),
-        price: helpers.parsePrice($('#products_information .price strong').text()),
+        price: _this.parsePrice($('#products_information .price strong').text()),
         currency: 'EUR',
         sizes: $.makeArray(
           $('#chooser option').map(function () {

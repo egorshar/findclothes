@@ -1,7 +1,9 @@
-var helpers = require('../helpers');
+var _ = require('underscore');
 
 module.exports = function () {
-  return helpers.initCrawler("http://www.peggsandson.com/clothing", {
+  var _this = this;
+
+  return this.crawl("http://www.peggsandson.com/clothing", {
     itemMatch: /http\:\/\/www\.peggsandson\.com\/((?!clothing).+)/i,
     discoverRegex: [
       /(\shref\s?\=\s?)[\"](http\:\/\/www\.peggsandson\.com\/clothing\/[^\"]+)/gi,
@@ -50,9 +52,15 @@ module.exports = function () {
         name: $.trim(name_mod[0]),
         mod: name_mod[1],
         img: $(".product-img-container img").attr('src'),
-        price: helpers.parsePrice($('.product-shop .price-box .regular-price:first').text()),
+        price: _this.parsePrice($('.product-shop .price-box .regular-price:first').text()),
         currency: 'GBP',
-        sizes: helpers.getSPConfigSizes($('#product-options-wrapper').html()),
+        sizes: _.reduce(_this.getSPConfigSizes($('#product-options-wrapper').html()), function (new_sizes, size) {
+          if ((size || '').toString().toLowerCase() != 'please') {
+            return new_sizes.concat([size]);
+          }
+
+          return new_sizes;
+        }, []),
       });
     }
   });
