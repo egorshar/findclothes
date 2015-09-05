@@ -1,36 +1,59 @@
-// var _ = require('underscore'),
-//     helpers = require('../helpers');
-//
-// module.exports = function () {
-//   var crawler = helpers.initCrawler("http://www.peggsandson.com/");
-//
-//   crawler
-//     .on("fetchcomplete", function (queueItem, fetchPage, response) {
-//       if (queueItem.url.match(/collections\/in\-stock\/products\//i)) {
-//         helpers.fetchPage(fetchPage, function (errors, window) {
-//           var mod = window.$('.product-name span').text();
-//
-//           window.$('.product-name span').remove();
-//
-//           this.emit('good_fetched', {
-//             url: queueItem.url,
-//             brand: window.$('.product-title .product-brand a').text(),
-//             name: window.$.trim(window.$('.product-name').text()),
-//             mod: mod,
-//             img: window.$(".product-photo-container img").attr('src'),
-//             price: helpers.parsePrice(window.$('.price.price-full.price-inc-vat .money').text()),
-//             price_no_vat: helpers.parsePrice(window.$('.price.price-fullprice-no-vat .money').text()),
-//             currency: window.$('.price.price-fullprice-no-vat .money').attr('data-currency'),
-//             sizes:window.$.makeArray(
-//               window.$('.size-row .btn:not(.disabled)').map(function () {
-//                 return window.$(this).text();
-//               })
-//             ),
-//           });
-//         }, this);
-//       }
-//     })
-//     .discoverRegex = [new RegExp('(\\shref\\s?=\\s?)[\"](.+(collections\/in-stock\/)[^\"]+)', 'ig')];;
-//
-//   return crawler;
-// };
+var helpers = require('../helpers');
+
+module.exports = function () {
+  return helpers.initCrawler("http://www.peggsandson.com/clothing", {
+    itemMatch: /http\:\/\/www\.peggsandson\.com\/((?!clothing).+)/i,
+    discoverRegex: [
+      /(\shref\s?\=\s?)[\"](http\:\/\/www\.peggsandson\.com\/clothing\/[^\"]+)/gi,
+      /(\shref\s?\=\s?)[\"](http\:\/\/www\.peggsandson\.com\/([^\"]+))(\" title)/gi
+    ],
+    // для peggsandson
+    // не подходит стандартный поиск ссылок
+    // от simplecrawler, поэтому определим свой
+    discoverResources: function (buf, queueItem) {
+      var resourceText = buf.toString('utf8');
+
+      return this.discoverRegex
+          .reduce(function(list, regex) {
+            var linksMatched = resourceText.match(regex),
+                linksCleaned;
+
+            if (linksMatched) {
+              linksCleaned = list.concat(linksMatched.reduce(function (list, link) {
+                return list.concat(link.replace(/\shref\=\"([^\"]+)(\" title)?/, '$1'));
+              }, []));
+
+              return linksCleaned;
+            } else {
+              return list;
+            }
+          }, [])
+          .reduce(function (list, check) {
+            if (list.indexOf(check) < 0) {
+              return list.concat([check]);
+            }
+
+            return list;
+          }, []);
+    },
+    // debug: true,
+    onFetch: function (url, window) {
+      var $name = window.$('.product-shop .product-name h1'),
+          name_mod;
+
+      name_mod = $name.text().split(' - ');
+      window.$('.product-name span').remove();
+
+      this.emit('good_fetched', {
+        url: url,
+        brand: window.$('.header-detail.manufacture h2 a').text(),
+        name: window.$.trim(name_mod[0]),
+        mod: name_mod[1],
+        img: window.$(".product-img-container img").attr('src'),
+        price: helpers.parsePrice(window.$('.product-shop .price-box .regular-price:first').text()),
+        currency: 'GBP',
+        sizes: helpers.getSPConfigSizes(window.$('#product-options-wrapper').html()),
+      });
+    }
+  });
+};

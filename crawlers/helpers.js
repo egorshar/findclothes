@@ -29,23 +29,37 @@ module.exports = {
     options = options || {};
 
     // настраиваем паука
-    crawler.interval = 100;
+    crawler.interval = 300;
     crawler.maxConcurrency = 1;
     crawler.timeout = 5000;
 
     crawler.addFetchCondition(this.excludeCondition);
 
+    crawler.discoverRegex = options.discoverRegex;
+
+    if (options.discoverResources) {
+      crawler.discoverResources = options.discoverResources;
+    }
+
     crawler
       .on("fetchcomplete", function (queueItem, fetchPage, response) {
-        if (queueItem.url.match(options.itemMatch)) {
-          helpers.fetchPage(fetchPage, function (errors, window) {
-            if (_.isFunction(options.onFetch)) {
-              options.onFetch.apply(this, [queueItem.url, window]);
-            }
-          }, this);
+        if (options.debug) {
+          console.log('page fetched: ', queueItem.url);
+          // console.log(response);
         }
-      })
-      .discoverRegex = options.discoverRegex;
+        if (queueItem.url.match(options.itemMatch)) {
+          if (options.debug) {
+            console.log('item matched: ', queueItem.url);
+          } else {
+            helpers.fetchPage(fetchPage, function (errors, window) {
+              // console.log(window.$('body').html());
+              if (_.isFunction(options.onFetch)) {
+                options.onFetch.apply(this, [queueItem.url, window]);
+              }
+            }, this);
+          }
+        }
+      });
 
     return crawler;
   },
