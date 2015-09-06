@@ -1,17 +1,15 @@
 var _ = require('underscore'),
     Crawler = require("simplecrawler"),
-    jsdom = require("jsdom"),
+    cheerio = require('cheerio'),
 
     // регулярка поиска размеров внутри json-объекта
     re = /\d\",\"label\"\:\"([^\"]+)\"/gi;
 
 module.exports = {
   fetchPage: function (buffer, callback, context) {
-    jsdom.env({
-      html: buffer,
-      scripts: ["http://code.jquery.com/jquery.js"],
-      done: _.bind(callback, context || this)
-    });
+    var $ = cheerio.load(buffer.toString('utf8'));
+
+    callback.call(context || this, $);
   },
 
   excludeCondition: function (parsedURL) {
@@ -29,7 +27,7 @@ module.exports = {
     options = options || {};
 
     // настраиваем паука
-    crawler.interval = 300;
+    crawler.interval = 2000;
     crawler.maxConcurrency = 1;
     crawler.timeout = 5000;
 
@@ -43,19 +41,18 @@ module.exports = {
 
     crawler
       .on("fetchcomplete", function (queueItem, fetchPage, response) {
-        if (options.debug) {
-          console.log('page fetched: ', queueItem.url);
-        }
         if (queueItem.url.match(options.itemMatch)) {
           if (options.debug) {
             console.log('item matched: ', queueItem.url);
-          } else {
-            helpers.fetchPage(fetchPage, function (errors, window) {
-              if (_.isFunction(options.onFetch)) {
-                options.onFetch.apply(this, [queueItem.url, window.$]);
-              }
-            }, this);
           }
+
+          helpers.fetchPage(fetchPage, function ($) {
+            if (_.isFunction(options.onFetch)) {
+              options.onFetch.apply(this, [queueItem.url, $]);
+            }
+          }, this);
+        } else {
+          console.log('page fetched, not matched: ', queueItem.url);
         }
       });
 
@@ -78,5 +75,5 @@ module.exports = {
     return _.reject(sizes, function (size) {
       return !size;
     });
-  }
+  },
 };
