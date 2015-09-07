@@ -7,8 +7,8 @@ module.exports = function () {
     return this.crawl("http://tres-bien.com/categories/", {
       itemMatch: /tres\-bien\.com\/[\w\d\-]+\/[\w\d\-]+/i,
       discoverRegex: [
-        /href=\"(\/[\w\d\-]+\/[\w\d\-]+)\"/gi,
-        /href=\".+\/categories\?p\=\d{1,}\"/gi
+        /href=\"(\/[\w\d\-]+\/[^\"]+)/gi,
+        /href=\"(http\:\/\/tres\-bien\.com\/categories\?p\=\d{1,})/gi
       ],
       debug: true,
       onFetch: function (url, $) {

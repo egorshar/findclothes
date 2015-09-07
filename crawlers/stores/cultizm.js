@@ -7,8 +7,8 @@ module.exports = function () {
     return this.crawl("http://www.cultizm.com/", {
       itemMatch: /cultizm\.com\/product_info\.php\?info\=/i,
       discoverRegex: [
-        /href\=\"(http\:\/\/www\.cultizm\.com\/index\.php\?type\=\d+)\"/gi,
-        /href\=\"(http\:\/\/www\.cultizm\.com\/product_info\.php\?info\=[\w\d\-]+\.html)\"/gi,
+        /href\=\"(http\:\/\/www\.cultizm\.com\/index\.php\?type\=\d+)/gi,
+        /href\=\"(http\:\/\/www\.cultizm\.com\/product_info\.php\?info\=[\w\d\-]+\.html)/gi,
       ],
       debug: true,
       onFetch: function (url, $) {

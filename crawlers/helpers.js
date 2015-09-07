@@ -13,7 +13,7 @@ module.exports = {
   },
 
   excludeCondition: function (parsedURL) {
-    return !parsedURL.uriPath.match(/\.(css|js|ico|jpg|png|gif)$/i);
+    return !parsedURL.uriPath.match(/\.(css|js|ico|jpg|png|gif|oembed)(\?.+)?$/i);
   },
 
   parsePrice: function (price) {

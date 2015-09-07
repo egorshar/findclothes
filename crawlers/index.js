@@ -1,20 +1,13 @@
 var _ = require('underscore');
+var requireDir = require('require-dir');
 
 var mongoose = require('mongoose');
 var Good = require('../models/good');
 var Store = require('../models/store');
 
-// var stores = [require('./stores/triads')];
+// var stores = [require('./stores/peggsandson')];
+var stores = requireDir('./stores');
 var helpers = require('./helpers');
-var stores = [
-  require('./stores/endclothing'),
-  require('./stores/oipolloi'),
-  require('./stores/thehipstore'),
-  require('./stores/tres-bien'),
-  require('./stores/triads'),
-  require('./stores/cultizm'),
-  require('./stores/peggsandson'),
-];
 
 var StoreCrawler = function () {
   this.connect(_.bind(this.crawlStore, this));

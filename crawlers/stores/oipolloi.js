@@ -22,8 +22,8 @@ module.exports = function () {
           mod: mod,
           img: $(".product-photo-container img").attr('src'),
           price: _this.parsePrice($('.price.price-full.price-inc-vat .money').text()),
-          price_no_vat: _this.parsePrice($('.price.price-fullprice-no-vat .money').text()),
-          currency: $('.price.price-fullprice-no-vat .money').attr('data-currency'),
+          price_no_vat: _this.parsePrice($('.price.price-full.price-no-vat .money').text()),
+          currency: $('.price.price-full.price-inc-vat .money').attr('data-currency'),
           sizes: _.map($('.size-row .btn:not(.disabled)'), function (el) {
             return $(el).text();
           }),

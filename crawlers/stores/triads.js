@@ -7,8 +7,8 @@ module.exports = function () {
     return this.crawl("http://www.triads.co.uk/triads-mens-c1", {
       itemMatch: /triads\.co\.uk\/triads\-mens\-c1\/[\w\d\-]+\/[\w\d\-]+\/[\w\d\-]+/i,
       discoverRegex: [
-        /href=\"(\/triads\-mens\-c1\/[\w\d\-]+\/[\w\d\-]+\/[\w\d\-]+)\"/gi,
-        /href=\".+\/triads-mens-c1\?page\=\d{1,}\"/gi
+        /href=\"(\/triads\-mens\-c1\/[\w\d\-]+\/[\w\d\-]+\/[^\"]+)/gi,
+        /href=\"(http\:\/\/www\.triads\.co\.uk\/triads-mens-c1\?page\=\d{1,})/gi
       ],
       debug: true,
       onFetch: function (url, $) {
