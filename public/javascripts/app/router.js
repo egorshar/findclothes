@@ -12,6 +12,17 @@ define(function (require) {
   pages.IndexPage = require('app/pages/index');
   pages.SearchPage = require('app/pages/search');
 
+  $( document ).ready(function(){
+  if( 'devicePixelRatio' in window && window.devicePixelRatio == 2 ){
+    var img_to_replace = $( 'img[data-2x]' ).get();
+    console.log(img_to_replace);
+
+    for (var i=0,l=img_to_replace.length; i<l; i++) {
+      img_to_replace[i].src = img_to_replace[i].getAttribute('data-2x');
+    };
+  }
+});
+
   AppRouter = Backbone.Router.extend({
     routes: {
       'search/*query': 'defaultRoute',

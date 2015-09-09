@@ -1,17 +1,13 @@
 div.search-block(id="search_block")
-  //- div.container
-    div.search-block__title
-      h1.search-block__title__caption= "Любая вещь — найдется"
   div.search-block__input-wrapper
     div.container
       div.row
-        div.col-md-2
-        div.col-md-8
-          form(action="/search/")
+        div.two.columns=" "
+        div.eight.columns
+          form.search-block__input-wrapper__form(action="/search/")
             div.input-group.input-group-lg.search-block__input-wrapper__input
               input(type='text', class='form-control', id='search', name="query" placeholder='Adidas x Barbour GSGNein Jacket')
-              div.input-group-btn
-                button(type='submit', class='btn ladda-button', id="search_btn", data-spinner-color="#000", data-style="slide-down")
-                  span.ladda-label
-                    span.glyphicon.glyphicon-search
-        div.col-md-2
+            button(type='submit', class='btn ladda-button', id="search_btn", data-spinner-color="#000", data-style="slide-down")
+              span.ladda-label
+                img(src="/images/next.svg", width="22")
+        div.two.columns
