@@ -28,5 +28,7 @@ node_modules
 # Users Environment Variables
 .lock-wscript
 
+public/javascripts/views/
+public/javascripts/vendor/
 public/stylesheets/less.css
 .env

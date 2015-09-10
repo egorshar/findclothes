@@ -1,7 +1,7 @@
 define(function (require) {
   'use strict';
 
-	var Page = require('app/pages/page'),
+	var Page = require('app/common/page'),
       Index = require('app/pages/index'),
       template = require('views/partials/search'),
       SearchResultsItem = require('app/common/search_item'),
@@ -37,7 +37,7 @@ define(function (require) {
     template: template,
 
     events: function() {
-      return _.extend({}, Index.prototype.events()||{}, {
+      return _.extend(Index.prototype.events() || {}, {
 
       });
     },
@@ -45,10 +45,10 @@ define(function (require) {
     initialize: function (query) {
       Page.prototype.initialize.call(this);
 
-      this.updateQuery();
-      this.results = new SearchCollection();
-      this.engines = new EnginesCollection();
-      this.render();
+      // this.updateQuery();
+      // this.results = new SearchCollection();
+      // this.engines = new EnginesCollection();
+      // this.render();
 
       this.listenTo(this.results, 'add', this.addResultItem);
     },

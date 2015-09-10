@@ -1,6 +1,6 @@
 // app config
 require.config({
-  app_name: 'findclothes',
+  app_name: 'waaant',
   baseUrl: '/javascripts/',
   shim: {
     'underscore': {

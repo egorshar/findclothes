@@ -12,5 +12,18 @@ define(function (require) {
     return this;
   };
 
+  helpers.retinaImages = function () {
+    var img_to_replace, i, l;
+
+    if ('devicePixelRatio' in window && window.devicePixelRatio == 2) {
+      img_to_replace = $('img[data-2x]').get();
+      l = img_to_replace.length;
+
+      for (i = 0; i < l; i++) {
+        img_to_replace[i].src = img_to_replace[i].getAttribute('data-2x');
+      };
+    }
+  };
+
   return helpers;
 });

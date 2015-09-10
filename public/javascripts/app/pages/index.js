@@ -1,7 +1,7 @@
 define(function (require) {
   'use strict';
 
-  var Page = require('app/pages/page'),
+  var Page = require('app/common/page'),
       template = require('views/partials/index'),
       Ladda = require('ladda'),
       IndexPage;
@@ -20,9 +20,9 @@ define(function (require) {
     initialize: function () {
       Page.prototype.initialize.call(this);
 
-      if (!this.firstLoad()) {
-        this.render();
-      }
+      // if (!this.firstLoad()) {
+      //   this.render();
+      // }
     },
 
     render: function () {
@@ -40,8 +40,8 @@ define(function (require) {
       if (val) {
         this.showBtnLoader();
 
-        FC.router.navigate('/search/' + encodeURIComponent(val), {
-          trigger: FC.router.current().indexOf('search') !== 0 ? true : false
+        WNT.navigate('/search/' + encodeURIComponent(val), {
+          // trigger: WNT..current().indexOf('search') !== 0 ? true : false
         });
       }
 
