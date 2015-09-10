@@ -2,7 +2,7 @@ define(function (require) {
   'use strict';
 
   var Backbone = require('backbone'),
-      helpers = require('app/helpers'),
+      h = require('app/helpers'),
       Page;
 
   Page = Backbone.View.extend({
@@ -12,7 +12,7 @@ define(function (require) {
 
     initialize: function () {
       this.setElement($('#page'));
-      helpers.retinaImages();
+      h.retinaImages();
     },
 
     destroy: function () {
