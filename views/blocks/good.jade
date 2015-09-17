@@ -1,0 +1,11 @@
+a.good(href=good.url, target="_blank")
+  div.good__image(style="background-image: url(" + good.img + ");")
+  div.good-inner
+    div.good__brand=(good.brand && good.brand.name) || ' '
+    div.good__name=good.name
+    div.good__footer
+      div.good__footer__store
+        img(src=good.store.logo, alt=good.store.name)
+      div.good__footer__price
+        span(class="good__footer__price__currency " + (good.price ? good.currency.label : ''))
+        =good.price

@@ -1,0 +1,45 @@
+.goods-container {
+  background-color: #f9f9f9;
+  padding: 14px 21px;
+}
+
+.goods-column {
+  float: left;
+  box-sizing: border-box;
+  padding: 0 7px;
+  width: 100%;
+}
+.size-1of4 {
+  width: 25%;
+}
+.size-1of3 {
+  width: 33.333%;
+}
+.size-1of2 {
+  width: 50%;
+}
+
+/* Configurate salvattore with media queries */
+@media screen and (max-width: 450px) {
+  .goods-grid[data-columns]::before {
+    content: '1 .goods-column';
+  }
+}
+
+@media screen and (min-width: 451px) and (max-width: 700px) {
+  .goods-grid[data-columns]::before {
+    content: '2 .goods-column.size-1of2';
+  }
+}
+
+@media screen and (min-width: 701px) and (max-width: 850px) {
+  .goods-grid[data-columns]::before {
+    content: '3 .goods-column.size-1of3';
+  }
+}
+
+@media screen and (min-width: 851px) {
+  .goods-grid[data-columns]::before {
+    content: '4 .goods-column.size-1of4';
+  }
+}

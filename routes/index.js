@@ -1,10 +1,14 @@
 var express = require('express');
+var Good = require('../models/good');
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', {
-    title: 'WAAANT'
+  Good.list(req.param.page).then(function (goods) {
+    res.render('index', {
+      title: 'WAAANT',
+      goods: goods,
+    });
   });
 });
 

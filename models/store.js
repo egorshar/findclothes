@@ -14,6 +14,12 @@ mongoose.model('Store', StoreSchema, 'stores');
 module.exports = {
   model: mongoose.model('Store'),
 
+  getActive: function () {
+    return this.model.find({})
+      .where('active').equals(true)
+      .exec();
+  },
+
   findByName: function (name) {
     return this.model.findOne({ name: name }).exec();
   },

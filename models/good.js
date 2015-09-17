@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var Brand = require('./brand');
 var Currency = require('./currency');
 var Size = require('./size');
+var Store = require('./store');
 
 var GoodSchema = new Schema ({
   url: String,
@@ -23,6 +24,37 @@ mongoose.model('Good', GoodSchema, 'goods');
 
 module.exports = {
   model: mongoose.model('Good'),
+
+  list: function (page) {
+    var model = this.model,
+        promise = new mongoose.Promise(),
+        per_page = 12;
+
+    page = page || 1;
+
+    Store.getActive().then(function (stores) {
+      if (stores.length) {
+        model.find()
+          .where('store').in(_.map(stores, function (store) {
+            return store._id;
+          }))
+          .skip(per_page * (page - 1))
+          .limit(per_page)
+          .populate('brand')
+          .populate('currency')
+          .populate('sizes')
+          .populate('store')
+          .exec()
+          .then(function (goods) {
+            promise.resolve(null, goods);
+          });
+      } else {
+        promise.resolve(null, []);
+      }
+    });
+
+    return promise;
+  },
 
   findByName: function (name, mod) {
     var filter = {
