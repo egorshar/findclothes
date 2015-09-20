@@ -10,7 +10,6 @@ define(function (require) {
       pages = {};
 
   pages.IndexPage = require('app/pages/index');
-  pages.SearchPage = require('app/pages/search');
 
   AppRouter = Backbone.Router.extend({
     routes: {
