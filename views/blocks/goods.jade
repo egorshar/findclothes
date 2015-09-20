@@ -1,0 +1,8 @@
+div.goods-container
+  block title
+    h5.goods-container__caption="Random"
+  div.goods-grid.clearfix#goods(data-columns)
+    - each good in goods
+      include ./good.jade
+div.goods-loader
+  button.goods-loader__btn="Find what you waaant"

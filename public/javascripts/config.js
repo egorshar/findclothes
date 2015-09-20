@@ -1,15 +1,18 @@
 // app config
-require.config({
-  app_name: 'findclothes',
+var wnt_config = {
+  app_name: 'waaant',
   baseUrl: '/javascripts/',
   shim: {
-    'underscore': {
+    underscore: {
       exports: '_'
     },
-    'backbone': {
+    backbone: {
       deps: ['underscore', 'jquery'],
       exports: 'Backbone'
-    }
+    },
+    steady: {
+      exports: 'Steady',
+    },
   },
   paths: {
     jquery: 'vendor/jquery/dist/jquery',
@@ -17,6 +20,15 @@ require.config({
     backbone: 'vendor/backbone/backbone',
     jade: 'vendor/jade/runtime',
     spin: 'vendor/spinjs/spin',
-    ladda: 'vendor/ladda/dist/ladda.min'
+    ladda: 'vendor/ladda/dist/ladda.min',
+    salvattore: 'vendor/salvattore/dist/salvattore',
+    steady: 'vendor/steady/Steady',
+    requirejs: 'vendor/requirejs/require',
   }
-});
+};
+
+if (typeof module === 'object' && module.exports) {
+  module.exports = wnt_config;
+} else {
+  require.config(wnt_config);
+}

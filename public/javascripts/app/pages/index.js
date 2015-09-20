@@ -1,84 +1,118 @@
 define(function (require) {
   'use strict';
 
-  var Page = require('app/pages/page'),
+  var salvattore = require('salvattore'),
+      Steady = require('steady'),
+
       template = require('views/partials/index'),
-      Ladda = require('ladda'),
+      Page = require('app/common/page'),
+      GoodsCollection = require('app/collections/goods'),
+      Good = require('app/views/good'),
+
       IndexPage;
 
   IndexPage = Page.extend({
     template: template,
+    page: 0,
+
+    _selectors: {
+      goods: '#goods',
+      more: '.goods-loader__btn',
+      caption: '.goods-container__caption',
+    },
 
     events: function() {
-      return _.extend({}, Page.prototype.events||{}, {
-        'click #search_btn': 'searchSubmit',
+      return _.extend({}, Page.prototype.events || {}, {
         'submit form': 'preventSubmit',
-        'input #search': 'updateQuery'
+        'click .goods-loader__btn': 'moreClick',
       });
     },
 
     initialize: function () {
       Page.prototype.initialize.call(this);
 
-      if (!this.firstLoad()) {
-        this.render();
-      }
+      this.goods_container = document.getElementById('goods');
+
+      this.goods = new GoodsCollection();
+      this.listenTo(this.goods, 'sync', this.appendGoods);
     },
 
-    render: function () {
-      this.$el.html(this.template());
+    destroy: function () {
+      if (this.steady) {
+        this.steady.stop();
+      }
+
+      Page.prototype.destroy.apply(this, arguments);
+    },
+
+    appendGoods: function (collection, models) {
+      var items = _.map(models, function (model) {
+        return new Good({
+          model: collection.get(model._id),
+        }).render().el;
+      }, this);
+
+      salvattore.appendElements(this.goods_container, items);
     },
 
     /* DOM-events */
-    updateQuery: function (e) {
-      this.query = !e ? this.$('#search').val() : $(e.currentTarget).val();
-    },
-
-    searchSubmit: function () {
-      var val = this.$('#search').val();
-
-      if (val) {
-        this.showBtnLoader();
-
-        FC.router.navigate('/search/' + encodeURIComponent(val), {
-          trigger: FC.router.current().indexOf('search') !== 0 ? true : false
-        });
-      }
-
-      return this.preventSubmit();
-    },
-
     preventSubmit: function () {
       return false;
     },
+
+    moreClick: function () {
+      this.fetchPage();
+    },
     /* end of DOM-events */
 
-    showBtnLoader: function () {
-      this.btn_loader = Ladda.create(this.$('#search_btn')[0]);
-      this.btn_loader.start();
-// // Start loading
-// l.start();
+    fetchPage: function (values, done) {
+      var new_page = this.page + 1;
 
-// // Will display a progress bar for 50% of the button width
-// l.setProgress( 0.5 );
+      if (this._fetching) {
+        return;
+      }
+      this._fetching = true;
 
-// // Stop loading
-// l.stop();
+      this.goods.fetch({
+        data: {page: new_page},
+        success: _.bind(function () {
+          if (this.page === 0) {
+            this.resetGoods();
+          }
 
-// // Toggle between loading/not loading states
-// l.toggle();
+          this.page++;
+          this._fetching = false;
+        }, this),
+        error: _.bind(function () {
+          this._fetching = false;
+        }, this),
+      });
+    },
 
-// // Check the current state
-// l.isLoading();
+    // при первой загрузке мы убиваем текущие
+    resetGoods: function () {
+      $('html, body').animate({
+        scrollTop: 0,
+      }, 300);
 
-// // Delete the button's ladda instance
-// l.remove();
-//       Ladda.bind('#search_btn', {
-//         callback: function (instance) {
-//           console.log(instance);
-//         }
-//       });
-    }
+      _.each(this.goods_container.querySelectorAll('a'), function (link) {
+        link.parentNode.removeChild(link);
+      });
+
+      salvattore.recreateColumns(this.goods_container);
+      this.$(this._selectors['caption']).html('Explore');
+
+      this.steady = new Steady({
+        conditions: {
+          "max-bottom": 200
+        },
+        throttle: 100,
+        handler: _.bind(function (values, done) {
+          this.fetchPage();
+          done();
+        }, this),
+      });
+    },
   });
 
   return IndexPage;

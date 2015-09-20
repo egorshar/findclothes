@@ -1,10 +1,28 @@
-@import "../variables.less";
+@import url("../variables.less");
 
 .header {
   width: 100%;
-  line-height: 60px;
-  height: 60px;
-  border-bottom: 1px solid @std-clr;
+  // line-height: 60px;
+  // height: 60px;
+  // border-bottom: 1px solid @std-clr;
+  text-align: center;
+  margin: 50px 0;
+
+  &__caption__wrapper {
+    margin-top: 50px;
+  }
+
+  &__caption {
+    font-family: 'Roboto Slab', serif;
+    color: @std-black;
+    text-shadow: 1px 1px 0px @std-white;
+  }
+
+  &__caption2 {
+    color: @std-black;
+    text-shadow: 0.5px 0.5px 0 @std-white;
+    margin-bottom: 0;
+  }
 
   &__logo {
     line-height: 40px;
