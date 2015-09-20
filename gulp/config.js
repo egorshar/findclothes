@@ -9,5 +9,10 @@ module.exports = {
   jade: {
     src: base_dir + 'views/**/*.jade',
     dest: base_dir + 'public/javascripts/views/'
-  }
+  },
+  js: {
+    src: base_dir + 'public/javascripts/',
+    config: base_dir + 'public/javascripts/config',
+    dest: base_dir + 'public/build/',
+  },
 };

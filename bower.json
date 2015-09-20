@@ -28,6 +28,7 @@
     "requirejs": "~2.1.15",
     "salvattore": "~1.0.8",
     "skeleton": "~2.0.4",
-    "spinjs": "~2.0.1"
+    "spinjs": "~2.0.1",
+    "steady": "Steady.js#~2.0.0"
   }
 }

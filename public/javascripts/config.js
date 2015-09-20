@@ -1,5 +1,5 @@
 // app config
-require.config({
+var wnt_config = {
   app_name: 'waaant',
   baseUrl: '/javascripts/',
   shim: {
@@ -10,6 +10,9 @@ require.config({
       deps: ['underscore', 'jquery'],
       exports: 'Backbone'
     },
+    steady: {
+      exports: 'Steady',
+    },
   },
   paths: {
     jquery: 'vendor/jquery/dist/jquery',
@@ -19,5 +22,13 @@ require.config({
     spin: 'vendor/spinjs/spin',
     ladda: 'vendor/ladda/dist/ladda.min',
     salvattore: 'vendor/salvattore/dist/salvattore',
+    steady: 'vendor/steady/Steady',
+    requirejs: 'vendor/requirejs/require',
   }
-});
+};
+
+if (typeof module === 'object' && module.exports) {
+  module.exports = wnt_config;
+} else {
+  require.config(wnt_config);
+}

@@ -2,6 +2,9 @@ var _ = require('underscore');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var NodeCache = require("node-cache");
+var count_cache = new NodeCache();
+
 var Brand = require('./brand');
 var Currency = require('./currency');
 var Size = require('./size');
@@ -25,8 +28,63 @@ mongoose.model('Good', GoodSchema, 'goods');
 module.exports = {
   model: mongoose.model('Good'),
 
+  random: function () {
+    var _this = this,
+        model = this.model,
+        promise = new mongoose.Promise(),
+        per_page = 12,
+        stores_ids = [],
+        find_promise;
+
+    Store.getActive().then(function (stores) {
+      if (stores.length) {
+        stores_ids = _.map(stores, function (store) {
+          return store._id;
+        });
+
+        count_cache.get('goods_count', function (err, value) {
+          if (!err && value) {
+            _this.findByStores(
+              stores_ids,
+              Math.floor(Math.random() * (value - per_page)),
+              per_page
+            ).then(function (goods) {
+              promise.resolve(null, goods);
+            });
+          } else {
+            model.count()
+              .where('store').in(stores_ids)
+              .exec()
+              .then(function (num) {
+                if (num) {
+                  _this.findByStores(
+                    stores_ids,
+                    Math.floor(Math.random() * (num - per_page + 1)),
+                    per_page
+                  ).then(function (goods) {
+                    promise.resolve(null, goods);
+                  });
+                } else {
+                  promise.resolve(null, []);
+                }
+
+                // положим количество товаров в кеш
+                // на 12 часов
+                count_cache.set('goods_count', num, 60*60*12);
+              });
+          }
+        });
+      } else {
+        promise.resolve(null, []);
+      }
+    });
+
+    return promise;
+  },
+
   list: function (page) {
-    var model = this.model,
+    var _this = this,
+        model = this.model,
         promise = new mongoose.Promise(),
         per_page = 12;
 
@@ -34,26 +92,34 @@ module.exports = {
 
     Store.getActive().then(function (stores) {
       if (stores.length) {
-        model.find()
-          .where('store').in(_.map(stores, function (store) {
+        _this.findByStores(
+          _.map(stores, function (store) {
             return store._id;
-          }))
-          .skip(per_page * (page - 1))
-          .limit(per_page)
-          .populate('brand')
-          .populate('currency')
-          .populate('sizes')
-          .populate('store')
-          .exec()
-          .then(function (goods) {
-            promise.resolve(null, goods);
-          });
+          }),
+          per_page * (page - 1),
+          per_page
+        ).then(function (goods) {
+          promise.resolve(null, goods);
+        });
       } else {
         promise.resolve(null, []);
       }
     });
 
     return promise;
+  },
+
+  findByStores: function (stores_ids, skip, limit) {
+    console.log(stores_ids, skip, limit);
+    return this.model.find()
+      .where('store').in(stores_ids)
+      .skip(skip)
+      .limit(limit)
+      .populate('brand')
+      .populate('currency')
+      .populate('sizes')
+      .populate('store')
+      .exec();
   },
 
   findByName: function (name, mod) {

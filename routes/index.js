@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  Good.list(req.param.page).then(function (goods) {
+  Good.random().then(function (goods) {
     res.render('index', {
       title: 'WAAANT',
       goods: goods,
@@ -12,8 +12,12 @@ router.get('/', function(req, res) {
   });
 });
 
-router.get('/search', function (req, res) {
-  res.json({});
+/* explore goods */
+router.get('/find', function (req, res) {
+  Good.list(req.query.page)
+    .then(function (goods) {
+      res.json(goods);
+    });
 });
 
 module.exports = router;
