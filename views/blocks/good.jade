@@ -1,5 +1,6 @@
 a.good(href=good.url, target="_blank")
-  div.good__image(style="background-image: url(" + good.img + ");")
+  div.good__image(data-echo-background=good.img)
+    div.loader="Loading..."
   div.good-inner
     div.good__brand=(good.brand && good.brand.name) || ' '
     div.good__name=good.name

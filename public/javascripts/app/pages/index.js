@@ -3,6 +3,7 @@ define(function (require) {
 
   var salvattore = require('salvattore'),
       Steady = require('steady'),
+      echo = require('echojs'),
 
       template = require('views/partials/index'),
       Page = require('app/common/page'),
@@ -35,12 +36,24 @@ define(function (require) {
 
       this.goods = new GoodsCollection();
       this.listenTo(this.goods, 'sync', this.appendGoods);
+
+      echo.init({
+        offset: 100,
+        throttle: 250,
+        unload: false,
+        callback: function (element, op) {
+          var loader = element.querySelector('.loader');
+          loader.parentNode.removeChild(loader);
+        },
+      });
     },
 
     destroy: function () {
       if (this.steady) {
         this.steady.stop();
       }
+
+      echo.detach();
 
       Page.prototype.destroy.apply(this, arguments);
     },
