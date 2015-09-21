@@ -38,7 +38,7 @@ define(function (require) {
       this.listenTo(this.goods, 'sync', this.appendGoods);
 
       echo.init({
-        offset: 100,
+        offset: 0,
         throttle: 250,
         unload: false,
         callback: function (element, op) {
