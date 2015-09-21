@@ -19,8 +19,6 @@ var wnt_config = {
     underscore: 'vendor/underscore/underscore',
     backbone: 'vendor/backbone/backbone',
     jade: 'vendor/jade/runtime',
-    spin: 'vendor/spinjs/spin',
-    ladda: 'vendor/ladda/dist/ladda.min',
     salvattore: 'vendor/salvattore/dist/salvattore',
     steady: 'vendor/steady/Steady',
     requirejs: 'vendor/requirejs/require',
