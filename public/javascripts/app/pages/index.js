@@ -4,6 +4,7 @@ define(function (require) {
   var salvattore = require('salvattore'),
       Steady = require('steady'),
       echo = require('echojs'),
+      Layzr = require('layzr'),
 
       template = require('views/partials/index'),
       Page = require('app/common/page'),
@@ -37,14 +38,12 @@ define(function (require) {
       this.goods = new GoodsCollection();
       this.listenTo(this.goods, 'sync', this.appendGoods);
 
-      echo.init({
-        offset: 0,
-        throttle: 250,
-        unload: false,
-        callback: function (element, op) {
-          var loader = element.querySelector('.loader');
+      this.layzr = new Layzr({
+        bgAttr: 'data-layzr',
+        callback: function () {
+          var loader = this.querySelector('.loader');
           loader.parentNode.removeChild(loader);
-        },
+        }
       });
     },
 
@@ -53,7 +52,9 @@ define(function (require) {
         this.steady.stop();
       }
 
-      echo.detach();
+      if (this.layzr) {
+        this.layzr.destroy();
+      }
 
       Page.prototype.destroy.apply(this, arguments);
     },
@@ -66,6 +67,9 @@ define(function (require) {
       }, this);
 
       salvattore.appendElements(this.goods_container, items);
+
+      this.layzr._nodes = document.querySelectorAll(this.layzr._optionsSelector);
+      this.layzr.update();
     },
 
     /* DOM-events */

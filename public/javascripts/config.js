@@ -23,6 +23,7 @@ var wnt_config = {
     steady: 'vendor/steady/Steady',
     requirejs: 'vendor/requirejs/require',
     echojs: 'vendor/echojs/dist/echo',
+    layzr: 'vendor/layzr.js/dist/layzr',
   },
 };
 
