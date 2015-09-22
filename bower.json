@@ -22,9 +22,9 @@
   ],
   "dependencies": {
     "backbone": "~1.1.2",
-    "echojs": "~1.7.3",
     "jade": "~1.7.0",
     "jquery": "~2.1.1",
+    "layzr.js": "layzrjs#~1.4.3",
     "requirejs": "~2.1.15",
     "salvattore": "~1.0.8",
     "skeleton": "~2.0.4",

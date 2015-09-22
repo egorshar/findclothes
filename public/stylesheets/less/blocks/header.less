@@ -7,6 +7,38 @@
   // border-bottom: 1px solid @std-clr;
   text-align: center;
   margin: 50px 0;
+  max-height: 270px;
+  transition: max-height .3s;
+  position: relative;
+
+  &:after,
+  &:before {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-image: url(/images/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    z-index: -1;
+
+    transition: -webkit-filter .3s;
+  }
+  &:after {
+    background-color: rgba(0,0,0,.2);
+    background-image: none;
+  }
+
+  &.sticky {
+    max-height: 88px;
+    overflow: hidden;
+  }
+  &.sticky:before {
+    -webkit-filter: blur(4px);
+  }
 
   &__caption__wrapper {
     margin-top: 50px;
