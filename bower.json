@@ -1,6 +1,6 @@
 {
   "name": "findclothes",
-  "version": "0.0.0",
+  "version": "0.5.1",
   "homepage": "https://github.com/egych/waaant",
   "authors": [
     "egych <egor.sharapov@gmail.com>"
@@ -24,9 +24,9 @@
     "backbone": "~1.1.2",
     "jade": "~1.7.0",
     "jquery": "~2.1.1",
-    "layzr.js": "layzrjs#~1.4.3",
     "requirejs": "~2.1.15",
     "salvattore": "~1.0.8",
+    "scroll-parallax": "~1.0.0",
     "skeleton": "~2.0.4",
     "steady": "Steady.js#~2.0.0"
   }

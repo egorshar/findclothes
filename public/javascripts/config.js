@@ -22,8 +22,7 @@ var wnt_config = {
     salvattore: 'vendor/salvattore/dist/salvattore',
     steady: 'vendor/steady/Steady',
     requirejs: 'vendor/requirejs/require',
-    echojs: 'vendor/echojs/dist/echo',
-    layzr: 'vendor/layzr.js/dist/layzr',
+    parallax: 'vendor/scroll-parallax/dist/Parallax',
   },
 };
 

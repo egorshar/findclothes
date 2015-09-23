@@ -2,16 +2,13 @@
 
 .header {
   width: 100%;
-  // line-height: 60px;
-  // height: 60px;
-  // border-bottom: 1px solid @std-clr;
   text-align: center;
   margin: 50px 0;
   max-height: 270px;
   transition: max-height .3s;
   position: relative;
+  z-index: -1;
 
-  &:after,
   &:before {
     content: "";
     position: fixed;
@@ -19,25 +16,22 @@
     bottom: 0;
     right: 0;
     left: 0;
-    background-image: url(/images/bg.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center top;
-    z-index: -1;
-
-    transition: -webkit-filter .3s;
-  }
-  &:after {
     background-color: rgba(0,0,0,.2);
     background-image: none;
+    z-index: 1;
   }
 
-  &.sticky {
-    max-height: 88px;
-    overflow: hidden;
+  .container {
+    position: relative;
+    z-index: 2;
   }
-  &.sticky:before {
-    -webkit-filter: blur(4px);
+
+  &__bg {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    top: -196px;
+    left: 0px;
   }
 
   &__caption__wrapper {

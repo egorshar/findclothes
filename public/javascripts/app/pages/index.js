@@ -3,8 +3,8 @@ define(function (require) {
 
   var salvattore = require('salvattore'),
       Steady = require('steady'),
-      echo = require('echojs'),
-      Layzr = require('layzr'),
+      preloader = require('app/common/images_preload'),
+      Parallax = require('parallax'),
 
       template = require('views/partials/index'),
       Page = require('app/common/page'),
@@ -21,6 +21,7 @@ define(function (require) {
       goods: '#goods',
       more: '.goods-loader__btn',
       caption: '.goods-container__caption',
+      header_bg: '.header__bg',
     },
 
     events: function() {
@@ -31,6 +32,7 @@ define(function (require) {
     },
 
     initialize: function () {
+
       Page.prototype.initialize.call(this);
 
       this.goods_container = document.getElementById('goods');
@@ -38,13 +40,15 @@ define(function (require) {
       this.goods = new GoodsCollection();
       this.listenTo(this.goods, 'sync', this.appendGoods);
 
-      this.layzr = new Layzr({
-        bgAttr: 'data-layzr',
-        callback: function () {
-          var loader = this.querySelector('.loader');
+      preloader.init({
+        throttle: 150,
+        callback: function (element) {
+          var loader = element.querySelector('.loader');
           loader.parentNode.removeChild(loader);
         }
       });
+
+      this.header_parallax = new Parallax('.header__bg').init();
     },
 
     destroy: function () {
@@ -52,9 +56,11 @@ define(function (require) {
         this.steady.stop();
       }
 
-      if (this.layzr) {
-        this.layzr.destroy();
+      if (this.header_parallax) {
+        this.header_parallax.destroy();
       }
+
+      preloader.detach();
 
       Page.prototype.destroy.apply(this, arguments);
     },
@@ -67,9 +73,6 @@ define(function (require) {
       }, this);
 
       salvattore.appendElements(this.goods_container, items);
-
-      this.layzr._nodes = document.querySelectorAll(this.layzr._optionsSelector);
-      this.layzr.update();
     },
 
     /* DOM-events */
@@ -118,6 +121,7 @@ define(function (require) {
 
       salvattore.recreateColumns(this.goods_container);
       this.$(this._selectors['caption']).html('Explore');
+      preloader.render();
 
       this.steady = new Steady({
         conditions: {
