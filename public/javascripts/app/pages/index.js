@@ -4,7 +4,6 @@ define(function (require) {
   var salvattore = require('salvattore'),
       Steady = require('steady'),
       preloader = require('app/common/images_preload'),
-      Parallax = require('parallax'),
 
       template = require('views/partials/index'),
       Page = require('app/common/page'),
@@ -48,7 +47,10 @@ define(function (require) {
         }
       });
 
-      this.header_parallax = new Parallax('.header__bg').init();
+      require(['/javascripts/vendor/scroll-parallax/dist/Parallax.js'], function (Parallax) {
+        new Parallax('.header__bg').init();
+      })
+      // this.header_parallax = ;
     },
 
     destroy: function () {
@@ -56,9 +58,9 @@ define(function (require) {
         this.steady.stop();
       }
 
-      if (this.header_parallax) {
-        this.header_parallax.destroy();
-      }
+      // if (this.header_parallax) {
+      //   this.header_parallax.destroy();
+      // }
 
       preloader.detach();
 
