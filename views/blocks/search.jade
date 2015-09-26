@@ -1,13 +1,16 @@
 div.search-block(id="search_block")
   div.search-block__input-wrapper
-    div.container
-      div.row
-        div.two.columns=" "
-        div.eight.columns
-          form.search-block__input-wrapper__form(action="/search/")
-            div.input-group.input-group-lg.search-block__input-wrapper__input
-              input(type='text', class='form-control', id='search', name="query" placeholder='Adidas x Barbour GSGNein Jacket')
-            button(type='submit', class='btn ladda-button', id="search_btn", data-spinner-color="#000", data-style="slide-down")
-              span.ladda-label
-                img(src="/images/next.svg", width="22")
-        div.two.columns
+    div.search-block__input-wrapper__logo
+    form.search-block__input-wrapper__form(action="/search/")
+      div.input-group.input-group-lg.search-block__input-wrapper__input
+        input(type='text', class='form-control', id='search', name="query" placeholder='Adidas x Barbour GSGNein Jacket')
+      button(type='submit', class='btn ladda-button', id="search_btn", data-spinner-color="#000", data-style="slide-down")
+        span.ladda-label
+          img(src="/images/next.svg", width="22")
+    div.search-block__input-wrapper__filters
+      button.search-block__input-wrapper__filters__item.search-block__input-wrapper__filters__sort="lowest"
+      button.search-block__input-wrapper__filters__item.search-block__input-wrapper__filters__store="stores"
+        ul.hidden
+          li="Endclothing"
+          li="Oipolloi"
+      button.search-block__input-wrapper__filters__item.search-block__input-wrapper__filters__brand="brands"

@@ -3,7 +3,8 @@ define(function (require) {
 
   var salvattore = require('salvattore'),
       Steady = require('steady'),
-      preloader = require('app/common/images_preload'),
+      preload = require('app/common/preload'),
+      sticky = require('app/common/sticky'),
 
       template = require('views/partials/index'),
       Page = require('app/common/page'),
@@ -11,6 +12,7 @@ define(function (require) {
       Good = require('app/views/good'),
 
       $document = $(document),
+      sticked = false,
       IndexPage;
 
   IndexPage = Page.extend({
@@ -36,11 +38,12 @@ define(function (require) {
       Page.prototype.initialize.call(this);
 
       this.goods_container = document.getElementById('goods');
+      this.search_block = document.getElementById('search_block');
 
       this.goods = new GoodsCollection();
       this.listenTo(this.goods, 'sync', this.appendGoods);
 
-      preloader.init({
+      preload.init({
         throttle: 150,
         callback: function (element) {
           var loader = element.querySelector('.loader');
@@ -49,6 +52,14 @@ define(function (require) {
             loader.parentNode.removeChild(loader);
           }
         }
+      });
+
+      sticky.init({
+        el: this.search_block,
+        stick: _.bind(function () {
+        }, this),
+        unstick: _.bind(function () {
+        }, this)
       });
 
       $document.trigger('page:loaded:index');
@@ -61,7 +72,8 @@ define(function (require) {
         this.steady.stop();
       }
 
-      preloader.detach();
+      preload.detach();
+      sticky.detach();
 
       Page.prototype.destroy.apply(this, arguments);
     },
@@ -142,7 +154,7 @@ define(function (require) {
   // с requirejs
   require([
     'jquery',
-    '/javascripts/vendor/scroll-parallax/dist/Parallax.js',
+    '/javascripts/vendor/scroll-parallax/dist/Parallax.min.js',
   ], function ($, Parallax) {
     var parallax,
         init = function () {
