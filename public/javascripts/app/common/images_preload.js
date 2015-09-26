@@ -63,7 +63,7 @@ define(function () {
   images_preload.render = function () {
     var nodes = document.querySelectorAll('img[data-img], [data-background]');
     var length = nodes.length;
-    var src, elem, preload_img = document.createElement('IMG');
+    var src, elem, preload_img;
 
     var view = {
       l: 0 - offset.l,
@@ -73,19 +73,25 @@ define(function () {
     };
 
     for (var i = 0; i < length; i++) {
+      preload_img = document.createElement('IMG');
+
       elem = nodes[i];
 
       if (inView(elem, view)) {
         preload_img.src = elem.getAttribute('data-background');
-
-        preload_img.onload = images_preload.loaded(elem);
+        preload_img.onload = _.bind(images_preload.loaded, elem, preload_img);
       }
     }
   };
 
-  images_preload.loaded = function (elem) {
+  images_preload.loaded = function (preload_img) {
+    var elem = this;
+
+    preload_img.onload = null;
+    preload_img.src = '';
+
     if (elem.getAttribute('data-background') !== null) {
-      elem.style.backgroundImage = "url(" + elem.getAttribute('data-background') + ")";
+      elem.style.backgroundImage = 'url(' + elem.getAttribute('data-background') + ')';
     } else {
       elem.src = elem.getAttribute('data-echo');
     }
