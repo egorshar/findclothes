@@ -10,11 +10,13 @@ define(function (require) {
       GoodsCollection = require('app/collections/goods'),
       Good = require('app/views/good'),
 
+      $document = $(document),
       IndexPage;
 
   IndexPage = Page.extend({
     template: template,
     page: 0,
+    _type: 'index',
 
     _selectors: {
       goods: '#goods',
@@ -31,7 +33,6 @@ define(function (require) {
     },
 
     initialize: function () {
-
       Page.prototype.initialize.call(this);
 
       this.goods_container = document.getElementById('goods');
@@ -43,24 +44,22 @@ define(function (require) {
         throttle: 150,
         callback: function (element) {
           var loader = element.querySelector('.loader');
-          loader.parentNode.removeChild(loader);
+
+          if (loader) {
+            loader.parentNode.removeChild(loader);
+          }
         }
       });
 
-      require(['/javascripts/vendor/scroll-parallax/dist/Parallax.js'], function (Parallax) {
-        new Parallax('.header__bg').init();
-      })
-      // this.header_parallax = ;
+      $document.trigger('page:loaded:index');
     },
 
     destroy: function () {
+      $document.triger('page:destroy:index');
+
       if (this.steady) {
         this.steady.stop();
       }
-
-      // if (this.header_parallax) {
-      //   this.header_parallax.destroy();
-      // }
 
       preloader.detach();
 
@@ -136,6 +135,34 @@ define(function (require) {
         }, this),
       });
     },
+  });
+
+  // параллакс инициализируем отдельно
+  // так как минифицированный он не работает
+  // с requirejs
+  require([
+    'jquery',
+    '/javascripts/vendor/scroll-parallax/dist/Parallax.js',
+  ], function ($, Parallax) {
+    var parallax,
+        init = function () {
+          if (WNT.page._type == 'index') {
+            parallax = new Parallax('.header__bg').init();
+          }
+        };
+
+    $document
+      .on('ready page:loaded:index', function (e) {
+        init();
+      })
+      .on('page:destroy:index', function () {
+        if (parallax) {
+          parallax.destroy();
+          parallax = null;
+        }
+      });
+
+    init();
   });
 
   return IndexPage;
