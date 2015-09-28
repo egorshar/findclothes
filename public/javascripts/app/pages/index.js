@@ -3,8 +3,9 @@ define(function (require) {
 
   var salvattore = require('salvattore'),
       Steady = require('steady'),
+      Stickyfill = require('stickyfill'),
       preload = require('app/common/preload'),
-      sticky = require('app/common/sticky'),
+      parallax = require('app/common/parallax'),
 
       template = require('views/partials/index'),
       Page = require('app/common/page'),
@@ -53,27 +54,18 @@ define(function (require) {
           }
         }
       });
-
-      sticky.init({
-        el: this.search_block,
-        stick: _.bind(function () {
-        }, this),
-        unstick: _.bind(function () {
-        }, this)
-      });
-
-      $document.trigger('page:loaded:index');
+      parallax.init(document.querySelector('.header__bg'));
+      Stickyfill.add(document.getElementById('search_block'));
     },
 
     destroy: function () {
-      $document.triger('page:destroy:index');
-
       if (this.steady) {
         this.steady.stop();
       }
 
       preload.detach();
-      sticky.detach();
+      parallax.detach();
+      Stickyfill.kill();
 
       Page.prototype.destroy.apply(this, arguments);
     },
@@ -107,7 +99,10 @@ define(function (require) {
       this._fetching = true;
 
       this.goods.fetch({
-        data: {page: new_page},
+        data: {
+          page: new_page,
+          search: this.$('#search').val(),
+        },
         success: _.bind(function () {
           if (this.page === 0) {
             this.resetGoods();
@@ -134,7 +129,7 @@ define(function (require) {
 
       salvattore.recreateColumns(this.goods_container);
       this.$(this._selectors['caption']).html('Explore');
-      preloader.render();
+      preload.render();
 
       this.steady = new Steady({
         conditions: {
@@ -147,34 +142,6 @@ define(function (require) {
         }, this),
       });
     },
-  });
-
-  // параллакс инициализируем отдельно
-  // так как минифицированный он не работает
-  // с requirejs
-  require([
-    'jquery',
-    '/javascripts/vendor/scroll-parallax/dist/Parallax.min.js',
-  ], function ($, Parallax) {
-    var parallax,
-        init = function () {
-          if (WNT.page._type == 'index') {
-            parallax = new Parallax('.header__bg').init();
-          }
-        };
-
-    $document
-      .on('ready page:loaded:index', function (e) {
-        init();
-      })
-      .on('page:destroy:index', function () {
-        if (parallax) {
-          parallax.destroy();
-          parallax = null;
-        }
-      });
-
-    init();
   });
 
   return IndexPage;

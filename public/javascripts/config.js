@@ -4,14 +4,17 @@ var wnt_config = {
   baseUrl: '/javascripts/',
   shim: {
     underscore: {
-      exports: '_'
+      exports: '_',
     },
     backbone: {
       deps: ['underscore', 'jquery'],
-      exports: 'Backbone'
+      exports: 'Backbone',
     },
     steady: {
       exports: 'Steady',
+    },
+    stickyfill: {
+      exports: 'Stickyfill',
     },
   },
   paths: {
@@ -22,7 +25,7 @@ var wnt_config = {
     salvattore: 'vendor/salvattore/dist/salvattore',
     steady: 'vendor/steady/Steady',
     requirejs: 'vendor/requirejs/require',
-    parallax: 'vendor/scroll-parallax/dist/Parallax',
+    stickyfill: 'vendor/Stickyfill/dist/stickyfill',
   },
 };
 
