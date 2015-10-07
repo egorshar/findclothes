@@ -101,7 +101,7 @@ define(function (require) {
       this.goods.fetch({
         data: {
           page: new_page,
-          search: this.$('#search').val(),
+          // filter: this.filter.get(),
         },
         success: _.bind(function () {
           if (this.page === 0) {

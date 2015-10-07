@@ -7,6 +7,7 @@ var StoreSchema = new Schema({
   url: String,
   logo: String,
   active: { type: Boolean, default: false },
+  last_sync: { type: Date, default: Date.now },
 });
 
 mongoose.model('Store', StoreSchema, 'stores');
@@ -32,17 +33,25 @@ module.exports = {
       return promise.resolve();
     }
 
+    store.last_sync = Date.now();
+
     this.findByName(store.name)
       .then(function (store_exists) {
         if (store_exists) {
-          promise.resolve(null, store_exists._id);
+          promise.resolve(null, {
+            _id: store_exists._id,
+            last_sync: store_exists.last_sync,
+          });
           return;
         }
 
         Store.collection.insert(store, function (err, result) {
           var store_id = !err ? result.insertedIds.join('') : undefined;
 
-          promise.resolve(null, mongoose.Types.ObjectId(store_id));
+          promise.resolve(null, {
+            _id: mongoose.Types.ObjectId(store_id),
+            last_sync: undefined,
+          });
         });
       });
 

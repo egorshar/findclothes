@@ -50,9 +50,14 @@ module.exports = {
               },
               Math.floor(Math.random() * (value - per_page)),
               per_page
-            ).then(function (goods) {
-              promise.resolve(null, goods);
-            });
+            ).then(
+              function (goods) {
+                promise.resolve(null, goods);
+              },
+              function () {
+                promise.resolve(null, []);
+              }
+            );
           } else {
             model.count()
               .where('store').in(stores_ids)
@@ -65,9 +70,14 @@ module.exports = {
                     },
                     Math.floor(Math.random() * (num - per_page + 1)),
                     per_page
-                  ).then(function (goods) {
-                    promise.resolve(null, goods);
-                  });
+                  ).then(
+                    function (goods) {
+                      promise.resolve(null, goods);
+                    },
+                    function () {
+                      promise.resolve(null, []);
+                    }
+                  );
                 } else {
                   promise.resolve(null, []);
                 }
@@ -106,9 +116,15 @@ module.exports = {
           },
           per_page * (page - 1),
           per_page
-        ).then(function (goods) {
-          promise.resolve(null, goods);
-        });
+        )
+        .then(
+          function (goods) {
+            promise.resolve(null, goods);
+          },
+          function () {
+            promise.resolve(null, []);
+          }
+        );
       } else {
         promise.resolve(null, []);
       }

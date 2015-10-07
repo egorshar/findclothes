@@ -19,6 +19,11 @@
     display: flex;
     justify-content: center;
 
+    &__logo {
+      display: flex;
+      padding-left: 15%;
+    }
+
     &__logo,
     &__filters {
       flex: auto;
@@ -48,10 +53,10 @@
         border-left: 1px solid #e2e2e2 !important;
         border-radius: 0;
 
-        &:focus {
+        &:active {
           border-bottom: 1px solid #e2e2e2;
         }
-        &:active:focus {
+        &:active {
           border-bottom-width: 2px;
         }
 
@@ -69,7 +74,7 @@
       display: flex;
       flex-direction: row;
       margin-bottom: 0;
-      width: 50%;
+      width: 100%;
       flex: initial;
     }
 
