@@ -93,7 +93,7 @@ define(function () {
     if (elem.getAttribute('data-background') !== null) {
       elem.style.backgroundImage = 'url(' + elem.getAttribute('data-background') + ')';
     } else {
-      elem.src = elem.getAttribute('data-echo');
+      elem.src = elem.getAttribute('data-img');
     }
 
     elem.removeAttribute('data-background');

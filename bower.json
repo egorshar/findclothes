@@ -26,8 +26,8 @@
     "jquery": "~2.1.1",
     "requirejs": "~2.1.15",
     "salvattore": "~1.0.8",
-    "scroll-parallax": "~1.0.0",
     "skeleton": "~2.0.4",
-    "steady": "Steady.js#~2.0.0"
+    "steady": "Steady.js#~2.0.0",
+    "Stickyfill": "~1.1.2"
   }
 }

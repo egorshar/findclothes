@@ -15,7 +15,12 @@ router.get('/', function(req, res) {
 
 /* explore goods */
 router.get('/find', function (req, res) {
-  Good.list(req.query.page)
+  Good.list(
+      {
+        search: req.query.search,
+      },
+      req.query.page
+    )
     .then(function (goods) {
       res.json(goods);
     });

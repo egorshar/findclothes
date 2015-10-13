@@ -1,22 +1,81 @@
 @import url("../variables.less");
 
-.search-block {
-  position: relative;
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
 
+.search-block {
   width: 100%;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #e2e2e2;
+  z-index: 1;
 
   &-active {
   }
 
   &__input-wrapper {
-    .two.columns {
-      min-height: 1px;
+    display: flex;
+    justify-content: center;
+
+    &__logo {
+      display: flex;
+      padding-left: 15%;
+    }
+
+    &__logo,
+    &__filters {
+      flex: auto;
+    }
+
+    &__filters {
+      display: flex;
+      flex-direction: row;
+
+      &__item {
+        flex: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background: #f9f9f9;
+        border: 0;
+        height: auto;
+        line-height: normal;
+        padding: 0;
+        color: @std-black;
+        text-align: center;
+        font-size: 13px;
+        font-weight: normal;
+        text-transform: none;
+        margin: 0;
+        border-left: 1px solid #e2e2e2 !important;
+        border-radius: 0;
+
+        &:active {
+          border-bottom: 1px solid #e2e2e2;
+        }
+        &:active {
+          border-bottom-width: 2px;
+        }
+
+        &:hover {
+          background-color: #fff;
+        }
+
+        &:first-child {
+          border-left: 0;
+        }
+      }
     }
 
     &__form {
       display: flex;
       flex-direction: row;
       margin-bottom: 0;
+      width: 100%;
+      flex: initial;
     }
 
     &__input {

@@ -45,12 +45,19 @@ module.exports = {
         count_cache.get('goods_count', function (err, value) {
           if (!err && value) {
             _this.findByStores(
-              stores_ids,
+              {
+                stores_ids: stores_ids
+              },
               Math.floor(Math.random() * (value - per_page)),
               per_page
-            ).then(function (goods) {
-              promise.resolve(null, goods);
-            });
+            ).then(
+              function (goods) {
+                promise.resolve(null, goods);
+              },
+              function () {
+                promise.resolve(null, []);
+              }
+            );
           } else {
             model.count()
               .where('store').in(stores_ids)
@@ -58,12 +65,19 @@ module.exports = {
               .then(function (num) {
                 if (num) {
                   _this.findByStores(
-                    stores_ids,
+                    {
+                      stores_ids: stores_ids
+                    },
                     Math.floor(Math.random() * (num - per_page + 1)),
                     per_page
-                  ).then(function (goods) {
-                    promise.resolve(null, goods);
-                  });
+                  ).then(
+                    function (goods) {
+                      promise.resolve(null, goods);
+                    },
+                    function () {
+                      promise.resolve(null, []);
+                    }
+                  );
                 } else {
                   promise.resolve(null, []);
                 }
@@ -82,25 +96,35 @@ module.exports = {
     return promise;
   },
 
-  list: function (page) {
+  list: function (filter, page) {
     var _this = this,
         model = this.model,
         promise = new mongoose.Promise(),
         per_page = 12;
 
+    filter = filter || {};
     page = page || 1;
 
     Store.getActive().then(function (stores) {
       if (stores.length) {
         _this.findByStores(
-          _.map(stores, function (store) {
-            return store._id;
-          }),
+          {
+            search: filter.search,
+            stores_ids: _.map(stores, function (store) {
+              return store._id;
+            }),
+          },
           per_page * (page - 1),
           per_page
-        ).then(function (goods) {
-          promise.resolve(null, goods);
-        });
+        )
+        .then(
+          function (goods) {
+            promise.resolve(null, goods);
+          },
+          function () {
+            promise.resolve(null, []);
+          }
+        );
       } else {
         promise.resolve(null, []);
       }
@@ -109,10 +133,24 @@ module.exports = {
     return promise;
   },
 
-  findByStores: function (stores_ids, skip, limit) {
-    console.log(stores_ids, skip, limit);
-    return this.model.find()
-      .where('store').in(stores_ids)
+  findByStores: function (filter, skip, limit) {
+    var conditions = {};
+
+    filter = filter || {};
+
+    if (filter.search) {
+      conditions.$text = {
+        $search: filter.search,
+      };
+    }
+
+    if (filter.stores_ids) {
+      conditions.store = {
+        $in: filter.stores_ids
+      };
+    }
+
+    return this.model.find(conditions)
       .skip(skip)
       .limit(limit)
       .populate('brand')

@@ -5,6 +5,8 @@ define(function (require) {
       h = require('app/helpers'),
       Page;
 
+  require('app/common/disable_hover');
+
   Page = Backbone.View.extend({
     events: {
       'click a': 'linkTo'
